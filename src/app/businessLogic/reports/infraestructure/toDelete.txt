@@ -1,0 +1,1 @@
+Aqui va toda la logia de la infrastructure de los reportes es decir todo lo que tenga que ver con firebase
