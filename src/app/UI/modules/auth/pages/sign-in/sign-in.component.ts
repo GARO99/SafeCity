@@ -38,6 +38,8 @@ export class SignInComponent {
     e.preventDefault();
     if (this.signInForm.valid) {
       console.log('Works');
+    }else{
+      this.signInForm.markAllAsTouched();
     }
   }
 
