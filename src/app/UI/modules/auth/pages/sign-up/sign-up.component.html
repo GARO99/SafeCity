@@ -1,1 +1,112 @@
-<p>sign-up works!</p>
+<ion-content class="ion-padding">
+    <ion-grid class="container">
+        <form [formGroup]="signUpForm" autocomplete="off" novalidate (ngSubmit)="onSubmit($event)">
+            <ion-row>
+                <ion-col size="12" class="ion-text-center">
+                    <h1>Registrar</h1>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-item>
+                        <ion-label position="floating">Email</ion-label>
+                        <ion-input type="email" formControlName="email"></ion-input>
+                        <ng-container *ngFor="let validation of validations.email">
+                            <ion-note slot="error" *ngIf="signUpForm.controls['email'].hasError(validation.type) && (signUpForm.controls['email'].dirty ||signUpForm.controls['email'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-item>
+                        <ion-label position="floating">Nombres</ion-label>
+                        <ion-input type="text" formControlName="name"></ion-input>
+                        <ng-container *ngFor="let validation of validations.name">
+                            <ion-note slot="error" *ngIf="signUpForm.controls['name'].hasError(validation.type) && (signUpForm.controls['name'].dirty ||signUpForm.controls['name'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-item>
+                        <ion-label position="floating">Apellidos</ion-label>
+                        <ion-input type="text" formControlName="lastName"></ion-input>
+                        <ng-container *ngFor="let validation of validations.lastName">
+                            <ion-note slot="error" *ngIf="signUpForm.controls['lastName'].hasError(validation.type) && (signUpForm.controls['lastName'].dirty ||signUpForm.controls['lastName'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-item>
+                        <ion-label position="floating">Nombre de Usuario</ion-label>
+                        <ion-input type="text" formControlName="userName"></ion-input>
+                        <ng-container *ngFor="let validation of validations.userName">
+                            <ion-note slot="error" *ngIf="signUpForm.controls['userName'].hasError(validation.type) && (signUpForm.controls['userName'].dirty ||signUpForm.controls['userName'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-item>
+                        <ion-label position="floating">Contraseña</ion-label>
+                        <ion-input type="password" formControlName="password"></ion-input>
+                        <ng-container *ngFor="let validation of validations.password">
+                            <ion-note slot="error" *ngIf="signUpForm.controls['password'].hasError(validation.type) && (signUpForm.controls['password'].dirty ||signUpForm.controls['password'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-item>
+                        <ion-label position="floating">Confirmar Contraseña</ion-label>
+                        <ion-input type="password" formControlName="confirmPassword"></ion-input>
+                        <ng-container *ngFor="let validation of validations.confirmPassword">
+                            <ion-note slot="error" *ngIf="signUpForm.controls['confirmPassword'].hasError(validation.type) && (signUpForm.controls['confirmPassword'].dirty ||signUpForm.controls['confirmPassword'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row class="ion-padding">
+                <ion-col size="12" class="ion-text-center">
+                    <ion-button type="submit" expand="block">Registrarse</ion-button>
+                </ion-col>
+            </ion-row>
+        </form>
+        <ion-row class="ion-padding">
+            <ion-col size="4" class="ion-text-center">
+                <ion-button expand="block" color="danger">
+                    <ion-icon name="logo-google"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col size="4" class="ion-text-center">
+                <ion-button expand="block" color="primary">
+                    <ion-icon name="logo-microsoft"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col size="4" class="ion-text-center">
+                <ion-button expand="block" color="dark">
+                    <ion-icon name="logo-apple"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button expand="block" routerLink="/login">Ya tengo cuenta</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
