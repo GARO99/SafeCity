@@ -18,10 +18,10 @@ import { TabsPage } from './pages/tabs/tabs.page';
     SignInComponent,
     SignUpComponent,
     HistorialComponente,
-    Tab1Page,
-    Tab2Page,  
-    Tab3Page,
-    TabsPage    
+    //Tab1Page,
+    //Tab2Page,  
+    //Tab3Page,
+    //TabsPage    
 
   ],
   imports: [
