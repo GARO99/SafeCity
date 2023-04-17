@@ -12,7 +12,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    //HistorialComponente,
+    //Tab1Page,
+    //Tab2Page,  
+    //Tab3Page,
+    //TabsPage    
+
   ],
   imports: [
     CommonModule,
@@ -20,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     IonicModule.forRoot(),
     ShareModule,    
     ReactiveFormsModule
+    
   ]
 })
 export class AuthModule { }
