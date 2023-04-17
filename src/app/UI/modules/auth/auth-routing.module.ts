@@ -17,27 +17,7 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignUpComponent
-  },
-  {
-    path: 'historial',
-    component: SignInComponent
-  },
-  {
-    path: 'tab1',
-    component: SignInComponent
-  },
-  {
-    path: 'tab2',
-    component: SignInComponent
-  },
-  {
-    path: 'tab3',
-    component: SignInComponent
-  },
-  {
-    path: 'tabs',
-    component: SignInComponent
-  },
+  }
   
 ];
 
