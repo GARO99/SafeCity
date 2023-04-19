@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ValidAuthentication } from '@businessLogic/users/usesCases/ValidAuthentication';
 
 @Component({
   selector: 'app-sign-in',
@@ -7,6 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent {
+  private auth = inject(ValidAuthentication);
+  private router = inject(Router);
+
   signInForm!: FormGroup;
   validations: any = {
     'email': [
@@ -38,6 +43,11 @@ export class SignInComponent {
     e.preventDefault();
     if (this.signInForm.valid) {
       console.log('Works');
+      this.auth.login(this.signInForm.value).subscribe(
+        () => {
+          this.router.navigate(['/app/insecurityreports']);
+        }
+      );
     }else{
       this.signInForm.markAllAsTouched();
     }

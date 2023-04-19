@@ -5,12 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShareModule } from '@UIShare/share.module';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideMessaging,getMessaging } from '@angular/fire/messaging';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { IonicModule } from '@ionic/angular';
+import { USE_DEVICE_LANGUAGE } from '@angular/fire/compat/auth';
+import { IAuthService } from '@businessLogic/users/domain/ports/IAuthService';
+import { AuthFirebaseService } from '@businessLogic/users/infraestructure/adapters/AuthFirebaseService';
+import { environment } from '@environments/environment';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { IonicModule } from '@ionic/angular';
     provideMessaging(() => getMessaging()),
     provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [
+    {provide: USE_DEVICE_LANGUAGE, useValue: true},
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    {provide: IAuthService, useClass: AuthFirebaseService }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
