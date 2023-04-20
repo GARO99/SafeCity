@@ -4,15 +4,17 @@ import { User as AppUser} from "../../domain/Entities/User";
 import { UserCredentials as  AppUserCredentials } from "../../domain/Entities/UserCredentials";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, from, map } from "rxjs";
+import { IGenericRepository } from "@businessLogic/share/Domain/ports/IGenericRepository";
 
 @Injectable({
   providedIn: 'root'
 })
 export  class AuthFirebaseService extends IAuthService {
-  private auth = inject(AngularFireAuth);
+  private _auth = inject(AngularFireAuth);
+  private _repository = inject(IGenericRepository<AppUser>)
 
   override login(userCredentials: AppUserCredentials): Observable<AppUser> {
-    return from (this.auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password).then(
+    return from (this._auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password).then(
       r => {
         console.log(r);
         let user: AppUser = {
@@ -39,13 +41,13 @@ export  class AuthFirebaseService extends IAuthService {
   }
 
   override hasSession(): Observable<boolean> {
-    return this.auth.authState.pipe(
+    return this._auth.authState.pipe(
       map((r: firebase.default.User | null) => r != null? true: false)
     );
   }
 
   override logout(): void {
-    this.auth.signOut();
+    this._auth.signOut();
   }
 
 }

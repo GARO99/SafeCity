@@ -10,37 +10,37 @@ import { DataModelsEnum } from "../enums/DataModelsEnum";
   providedIn: 'root'
 })
 export class GenericFirestoreRepository<T extends DomainEntity> extends IGenericRepository<T> {
-  private db = inject(AngularFirestore);
-  private context = new FirestoreContext();
-  private ref: AngularFirestoreCollection<T>;
+  private _db = inject(AngularFirestore);
+  private _context = new FirestoreContext();
+  private _ref: AngularFirestoreCollection<T>;
 
   constructor() {
     super();
-    this.ref = this.db.collection(this.context.Set(DataModelsEnum.user));     
+    this._ref = this._db.collection(this._context.Set(DataModelsEnum.user));     
   }
 
   override getAll(): Observable<T[]> {
-    return this.ref.valueChanges({ idField: 'id' });
+    return this._ref.valueChanges({ idField: 'id' });
   }
 
   override getById(id: string): Observable<T | undefined> {
-    return this.ref.doc<T>(id).valueChanges({ idField: 'id' });
+    return this._ref.doc<T>(id).valueChanges({ idField: 'id' });
   }
 
   override create(entity: T): Observable<T | undefined> {
     const id = entity.id; 
-    this.ref.doc(id).set({ ...entity, id });
+    this._ref.doc(id).set({ ...entity, id });
 
-    return this.ref.doc<T>(id).valueChanges({ idField: 'id' });
+    return this._ref.doc<T>(id).valueChanges({ idField: 'id' });
   }
 
   override update(entity: T): Observable<T | undefined> {
-    this.ref.doc<T>(entity.id).update(entity);
+    this._ref.doc<T>(entity.id).update(entity);
 
-    return this.ref.doc<T>(entity.id).valueChanges({ idField: 'id' });
+    return this._ref.doc<T>(entity.id).valueChanges({ idField: 'id' });
   }
 
   override delete(id: any): void {
-    this.ref.doc<T>(id).delete();
+    this._ref.doc<T>(id).delete();
   }
 }

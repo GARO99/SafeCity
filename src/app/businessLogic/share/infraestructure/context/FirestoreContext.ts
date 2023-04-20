@@ -7,7 +7,7 @@ import { DataModelsEnum } from "../enums/DataModelsEnum";
   providedIn: 'root'
 })
 export class FirestoreContext {
-  private dataModel = new Map<DataModelsEnum ,string>();
+  private _dataModel = new Map<DataModelsEnum ,string>();
 
   constructor() {
     this.OnModelCreating();
@@ -15,12 +15,12 @@ export class FirestoreContext {
 
   private OnModelCreating(): void {
     
-    this.dataModel.set(DataModelsEnum.user, '/users');
+    this._dataModel.set(DataModelsEnum.user, '/users');
   }
 
 
   public Set(model: DataModelsEnum): string {
-    return this.dataModel.get(model)?? '';
+    return this._dataModel.get(model)?? '';
   };
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '@UIUtils/custom-validators';
 
@@ -8,6 +8,8 @@ import { CustomValidators } from '@UIUtils/custom-validators';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
+  private _fb = inject(FormBuilder);
+
   signUpForm!: FormGroup;
   validations: any = {
     'email': [
@@ -34,14 +36,12 @@ export class SignUpComponent {
     ]
   }
 
-  constructor(
-    private fb: FormBuilder
-  ) {   
+  constructor() {   
     this.FormBuild();
   }
 
   private FormBuild(): void {
-    this.signUpForm = this.fb.group({
+    this.signUpForm = this._fb.group({
       email: [null, [Validators.required, Validators.pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)]],
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],

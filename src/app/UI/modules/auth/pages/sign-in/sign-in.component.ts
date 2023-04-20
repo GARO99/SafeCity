@@ -9,8 +9,9 @@ import { ValidAuthentication } from '@businessLogic/users/usesCases/ValidAuthent
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent {
-  private auth = inject(ValidAuthentication);
-  private router = inject(Router);
+  private _auth = inject(ValidAuthentication);
+  private _router = inject(Router);
+  private _fb = inject(FormBuilder)
 
   signInForm!: FormGroup;
   validations: any = {
@@ -23,14 +24,12 @@ export class SignInComponent {
       { type: 'pattern', message: 'La contraseña debe tener lo menos 6 caracteres, un numero y un carácter especial' },
     ]
   }
-  constructor(
-    private fb: FormBuilder
-  ) {
+  constructor() {
     this.FormBuild();
   }
 
   private FormBuild(): void {
-    this.signInForm = this.fb.group({
+    this.signInForm = this._fb.group({
       email: [null, [Validators.required, Validators.pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)]],
       password: [null, [
         Validators.required,
@@ -43,9 +42,9 @@ export class SignInComponent {
     e.preventDefault();
     if (this.signInForm.valid) {
       console.log('Works');
-      this.auth.login(this.signInForm.value).subscribe(
+      this._auth.login(this.signInForm.value).subscribe(
         () => {
-          this.router.navigate(['/app/insecurityreports']);
+          this._router.navigate(['/app/insecurityreports']);
         }
       );
     }else{
