@@ -3,8 +3,9 @@ import { IAuthService } from "../../domain/ports/IAuthService";
 import { User as AppUser} from "../../domain/Entities/User";
 import { UserCredentials as  AppUserCredentials } from "../../domain/Entities/UserCredentials";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, from, map } from "rxjs";
+import { Observable, from, of, switchMap } from "rxjs";
 import { IGenericRepository } from "@businessLogic/share/Domain/ports/IGenericRepository";
+import * as firebase from "firebase/compat";
 
 @Injectable({
   providedIn: 'root'
@@ -14,25 +15,11 @@ export  class AuthFirebaseService extends IAuthService {
   private _repository = inject(IGenericRepository<AppUser>)
 
   override login(userCredentials: AppUserCredentials): Observable<AppUser> {
-    return from (this._auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password).then(
-      r => {
-        console.log(r);
-        let user: AppUser = {
-          id: "",
-          identification: {
-            type: '',
-            number: 0
-          },
-          username: "",
-          name: "",
-          email: '',
-          lastName: "",
-          userEventTags: [],
-          active: false
-        };
-        return user;
-      }
-    ));
+    return from(this._auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password)).pipe(
+      switchMap((r: firebase.default.auth.UserCredential) => {
+        return this._repository.getById(r.user?.uid?? '');
+      })
+    );
     
   }
 
@@ -40,9 +27,14 @@ export  class AuthFirebaseService extends IAuthService {
     throw new Error("Method not implemented.");
   }
 
-  override hasSession(): Observable<boolean> {
+  override hasSession(): Observable<AppUser | null> {
     return this._auth.authState.pipe(
-      map((r: firebase.default.User | null) => r != null? true: false)
+      switchMap((r: firebase.default.User | null) => {
+        if(r != null){
+          return this._repository.getById(r.uid);
+        }
+        return of(null);
+      })
     );
   }
 

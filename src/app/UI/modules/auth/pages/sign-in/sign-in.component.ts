@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '@businessLogic/users/domain/Entities/User';
 import { ValidAuthentication } from '@businessLogic/users/usesCases/ValidAuthentication';
 
 @Component({
@@ -43,7 +44,8 @@ export class SignInComponent {
     if (this.signInForm.valid) {
       console.log('Works');
       this._auth.login(this.signInForm.value).subscribe(
-        () => {
+        (r: User) => {
+          console.log(r);
           this._router.navigate(['/app/insecurityreports']);
         }
       );

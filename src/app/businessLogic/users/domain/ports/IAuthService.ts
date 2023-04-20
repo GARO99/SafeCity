@@ -5,6 +5,6 @@ import { UserCredentials as  AppUserCredentials } from "../Entities/UserCredenti
 export abstract class IAuthService {
     abstract login(userCredentials: AppUserCredentials): Observable<AppUser>;
     abstract signUp(user: any): Observable<AppUser>
-    abstract hasSession(): Observable<boolean>;
+    abstract hasSession(): Observable<AppUser | null>;
     abstract logout(): void;
 }

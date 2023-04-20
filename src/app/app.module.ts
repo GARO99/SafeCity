@@ -15,6 +15,8 @@ import { IAuthService } from '@businessLogic/users/domain/ports/IAuthService';
 import { AuthFirebaseService } from '@businessLogic/users/infraestructure/adapters/AuthFirebaseService';
 import { environment } from '@environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { IGenericRepository } from '@businessLogic/share/Domain/ports/IGenericRepository';
+import { GenericFirestoreRepository } from '@businessLogic/share/infraestructure/adapters/GenericFirestoreRepository';
 
 @NgModule({
   declarations: [
@@ -32,9 +34,10 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     provideStorage(() => getStorage())
   ],
   providers: [
-    {provide: USE_DEVICE_LANGUAGE, useValue: true},
+    { provide: USE_DEVICE_LANGUAGE, useValue: true },
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-    {provide: IAuthService, useClass: AuthFirebaseService }
+    { provide: IAuthService, useClass: AuthFirebaseService },
+    { provide: IGenericRepository, useClass: GenericFirestoreRepository }
   ],
   bootstrap: [AppComponent]
 })
