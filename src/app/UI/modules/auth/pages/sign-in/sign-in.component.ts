@@ -42,10 +42,8 @@ export class SignInComponent {
   onSubmit(e: Event): void {
     e.preventDefault();
     if (this.signInForm.valid) {
-      console.log('Works');
       this._auth.login(this.signInForm.value).subscribe(
         (r: User) => {
-          console.log(r);
           this._router.navigate(['/app/insecurityreports']);
         }
       );
