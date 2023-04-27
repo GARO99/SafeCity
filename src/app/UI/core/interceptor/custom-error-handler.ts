@@ -11,19 +11,22 @@ import { environment } from "@environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class CustomErrorHandler implements ErrorHandler{
+export class CustomErrorHandler implements ErrorHandler {
   private alertController = inject(AlertController);
 
   async handleError(error: any): Promise<void> {
-   if (error instanceof  FirebaseError) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      message: this.getFirebaseMessage((await Device.getLanguageCode()).value, error.code),
-      buttons: ['OK'],
-    });
+    if (environment.isDeveloped) {
+      console.error(error);
+    }
+    if (error instanceof FirebaseError) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: this.getFirebaseMessage((await Device.getLanguageCode()).value, error.code),
+        buttons: ['OK'],
+      });
 
-    await alert.present();
-   }
+      await alert.present();
+    }
   }
 
   private getFirebaseMessage(languageCode: string, errorCode: string): string {
@@ -33,13 +36,13 @@ export class CustomErrorHandler implements ErrorHandler{
       if (environment.isDeveloped) {
         return MESSAGE.toDev;
       }
-      return MESSAGE.toClient  === 'default'? DEFAULT_MESSAGE : MESSAGE.toClient;
+      return MESSAGE.toClient === 'default' ? DEFAULT_MESSAGE : MESSAGE.toClient;
     }
 
     return DEFAULT_MESSAGE;
   }
 
-  private getDefaultFirebaseMessage(lang:Language): DefaultAppMessage {
+  private getDefaultFirebaseMessage(lang: Language): DefaultAppMessage {
     return defaultMessage[lang]
-}
+  }
 }

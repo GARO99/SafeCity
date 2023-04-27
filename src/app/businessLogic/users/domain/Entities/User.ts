@@ -3,10 +3,10 @@ import { UserIdentification} from "./UserIdentification";
 
 export interface User extends DomainEntity {
     identification?: UserIdentification;
-    username?: string;
-    name?: string;
-    lastName?: string;
-    email?: string;
+    username: string;
+    name: string;
+    lastName: string;
+    email: string;
     userEventTags?: string[];
-    active?: boolean;
+    active: boolean;
 }

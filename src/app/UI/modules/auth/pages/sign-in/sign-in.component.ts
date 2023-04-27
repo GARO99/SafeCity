@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '@businessLogic/users/domain/Entities/User';
-import { ValidAuthentication } from '@businessLogic/users/usesCases/ValidAuthentication';
+import { Authentication } from '@businessLogic/users/usesCases/Authentication';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,7 +9,7 @@ import { ValidAuthentication } from '@businessLogic/users/usesCases/ValidAuthent
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent {
-  private _auth = inject(ValidAuthentication);
+  private _auth = inject(Authentication);
   private _router = inject(Router);
   private _fb = inject(FormBuilder)
 
@@ -43,7 +42,7 @@ export class SignInComponent {
     e.preventDefault();
     if (this.signInForm.valid) {
       this._auth.login(this.signInForm.value).subscribe(
-        (r: User) => {
+        () => {
           this._router.navigate(['/app/insecurityreports']);
         }
       );

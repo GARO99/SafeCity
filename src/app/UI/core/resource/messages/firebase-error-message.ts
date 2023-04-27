@@ -226,6 +226,10 @@ const FirebaseErrorMessage: ResourceErrorMessageDictionary[] = [
       toDev: "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.",
       toClient: "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later."
     },
+    "auth/email-already-in-use": {
+      toDev: "The email address is already in use by another account.",
+      toClient: "The email address is already in use by another account."
+    },
     "storage/unknown": {
       toDev: "An unknown error occurred.",
       toClient: "default"
@@ -510,6 +514,10 @@ const FirebaseErrorMessage: ResourceErrorMessageDictionary[] = [
     "auth/user-not-found": {
       toDev: "No existe ningún registro de usuario que corresponda al identificador proporcionado.",
       toClient: "Usuario no encontrado, por favor revise su información."
+    },    
+    "auth/email-already-in-use": {
+      toDev: "La dirección de correo electrónico ya está siendo utilizada por otra cuenta.",
+      toClient: "La dirección de correo electrónico ya está siendo utilizada por otra cuenta."
     },
     "auth/too-many-requests": {
       toDev: "El acceso a esta cuenta se ha desactivado temporalmente debido a muchos intentos fallidos de inicio de sesión. Puede restablecerlo inmediatamente restableciendo su contraseña o puede volver a intentarlo más tarde.",

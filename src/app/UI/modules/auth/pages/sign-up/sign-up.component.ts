@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Authentication } from '@businessLogic/users/usesCases/Authentication';
 import { CustomValidators } from '@UIUtils/custom-validators';
 
 @Component({
@@ -8,6 +10,8 @@ import { CustomValidators } from '@UIUtils/custom-validators';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
+  private _auth = inject(Authentication);
+  private _router = inject(Router);
   private _fb = inject(FormBuilder);
 
   signUpForm!: FormGroup;
@@ -60,8 +64,17 @@ export class SignUpComponent {
   onSubmit(e: Event): void {
     e.preventDefault();
     if (this.signUpForm.valid) {
-      console.log('Works');
-      
+      this._auth.signUp({
+        active: true,
+        email: this.signUpForm.get('email')?.value,
+        username: this.signUpForm.get('userName')?.value,
+        name: this.signUpForm.get('name')?.value,
+        lastName: this.signUpForm.get('lastName')?.value,
+      }, this.signUpForm.get('password')?.value).subscribe(
+        () =>{
+          this._router.navigate(['']);
+        }
+      );
     }else{
       this.signUpForm.markAllAsTouched();
     }

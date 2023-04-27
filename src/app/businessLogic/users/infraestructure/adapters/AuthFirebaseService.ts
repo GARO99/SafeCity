@@ -3,7 +3,7 @@ import { IAuthService } from "../../domain/ports/IAuthService";
 import { User as AppUser} from "../../domain/Entities/User";
 import { UserCredentials as  AppUserCredentials } from "../../domain/Entities/UserCredentials";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, from, of, switchMap } from "rxjs";
+import { Observable, first, from, of, switchMap } from "rxjs";
 import { IGenericRepository } from "@businessLogic/share/Domain/ports/IGenericRepository";
 import * as firebase from "firebase/compat";
 
@@ -18,13 +18,20 @@ export  class AuthFirebaseService extends IAuthService {
     return from(this._auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password)).pipe(
       switchMap((r: firebase.default.auth.UserCredential) => {
         return this._repository.getById(r.user?.uid?? '');
-      })
+      }),
+      first()
     );
     
   }
 
-  override signUp(user: any): Observable<AppUser> {
-    throw new Error("Method not implemented.");
+  override signUp(user: AppUser, password: string): Observable<AppUser> {
+    return from(this._auth.createUserWithEmailAndPassword(user.email, password)).pipe(
+      switchMap((r: firebase.default.auth.UserCredential) => {
+        user.id = r.user?.uid;
+        return this._repository.create(user);
+      }),
+      first()
+    );
   }
 
   override hasSession(): Observable<AppUser | null> {
@@ -41,5 +48,4 @@ export  class AuthFirebaseService extends IAuthService {
   override logout(): void {
     this._auth.signOut();
   }
-
 }
