@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, first, from, of, switchMap } from "rxjs";
 import { IGenericRepository } from "@businessLogic/share/Domain/ports/IGenericRepository";
 import * as firebase from "firebase/compat";
+import { sha256 } from 'js-sha256';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export  class AuthFirebaseService extends IAuthService {
   private _repository = inject(IGenericRepository<AppUser>)
 
   override login(userCredentials: AppUserCredentials): Observable<AppUser> {
-    return from(this._auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password)).pipe(
+    return from(this._auth.signInWithEmailAndPassword(userCredentials.email, sha256(userCredentials.password))).pipe(
       switchMap((r: firebase.default.auth.UserCredential) => {
         return this._repository.getById(r.user?.uid?? '');
       }),
@@ -25,9 +26,10 @@ export  class AuthFirebaseService extends IAuthService {
   }
 
   override signUp(user: AppUser, password: string): Observable<AppUser> {
-    return from(this._auth.createUserWithEmailAndPassword(user.email, password)).pipe(
+    return from(this._auth.createUserWithEmailAndPassword(user.email, sha256(password))).pipe(
       switchMap((r: firebase.default.auth.UserCredential) => {
         user.id = r.user?.uid;
+        user.emailVerified = r.user?.emailVerified;
         return this._repository.create(user);
       }),
       first()

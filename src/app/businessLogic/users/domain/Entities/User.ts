@@ -8,5 +8,5 @@ export interface User extends DomainEntity {
     lastName: string;
     email: string;
     userEventTags?: string[];
-    active: boolean;
+    emailVerified?: boolean;
 }

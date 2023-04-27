@@ -3,6 +3,7 @@ import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import { Authentication } from '@businessLogic/users/usesCases/Authentication';
 import { CustomValidators } from '@UIUtils/custom-validators';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,6 +14,7 @@ export class SignUpComponent {
   private _auth = inject(Authentication);
   private _router = inject(Router);
   private _fb = inject(FormBuilder);
+  private _toastController = inject(ToastController)
 
   signUpForm!: FormGroup;
   validations: any = {
@@ -64,15 +66,22 @@ export class SignUpComponent {
   onSubmit(e: Event): void {
     e.preventDefault();
     if (this.signUpForm.valid) {
+      Object.keys(this.signUpForm.controls).forEach((key) => this.signUpForm.get(key)?.setValue(this.signUpForm.get(key)?.value.trim()));
       this._auth.signUp({
-        active: true,
         email: this.signUpForm.get('email')?.value,
         username: this.signUpForm.get('userName')?.value,
         name: this.signUpForm.get('name')?.value,
         lastName: this.signUpForm.get('lastName')?.value,
       }, this.signUpForm.get('password')?.value).subscribe(
-        () =>{
+        async () =>{
           this._router.navigate(['']);
+          const toast = await this._toastController.create({
+            message: 'Ahora puedes iniciar sesión',
+            duration: 1500,
+            position: 'top'
+          });
+      
+          await toast.present();
         }
       );
     }else{
