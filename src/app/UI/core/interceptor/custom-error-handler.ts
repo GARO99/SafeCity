@@ -7,25 +7,20 @@ import { Device } from "@capacitor/device";
 import FirebaseErrorMessage from "../resource/messages/firebase-error-message";
 import { DefaultAppMessage } from "../models/default-app-message.model";
 import { environment } from "@environments/environment";
+import { AlertService } from "../services/alert/alert.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomErrorHandler implements ErrorHandler {
-  private alertController = inject(AlertController);
+  private _alertService = inject(AlertService);
 
-  async handleError(error: any): Promise<void> {
+    async handleError(error: any): Promise<void> {
     if (environment.isDeveloped) {
       console.error(error);
     }
     if (error instanceof FirebaseError) {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: this.getFirebaseMessage((await Device.getLanguageCode()).value, error.code),
-        buttons: ['OK'],
-      });
-
-      await alert.present();
+      this._alertService.errorAlert(this.getFirebaseMessage((await Device.getLanguageCode()).value, error.code));
     }
   }
 

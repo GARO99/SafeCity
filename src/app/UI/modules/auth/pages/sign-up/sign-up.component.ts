@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Authentication } from '@businessLogic/users/usesCases/Authentication';
 import { CustomValidators } from '@UIUtils/custom-validators';
 import { ToastController } from '@ionic/angular';
+import { ToastService } from 'src/app/UI/core/services/toast/toast.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,7 +15,7 @@ export class SignUpComponent {
   private _auth = inject(Authentication);
   private _router = inject(Router);
   private _fb = inject(FormBuilder);
-  private _toastController = inject(ToastController)
+  private _toastService = inject(ToastService);
 
   signUpForm!: FormGroup;
   validations: any = {
@@ -73,15 +74,9 @@ export class SignUpComponent {
         name: this.signUpForm.get('name')?.value,
         lastName: this.signUpForm.get('lastName')?.value,
       }, this.signUpForm.get('password')?.value).subscribe(
-        async () =>{
+        () =>{
           this._router.navigate(['']);
-          const toast = await this._toastController.create({
-            message: 'Ahora puedes iniciar sesión',
-            duration: 1500,
-            position: 'top'
-          });
-      
-          await toast.present();
+          this._toastService.topToast('Ahora puedes iniciar sesión');
         }
       );
     }else{
