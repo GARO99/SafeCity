@@ -24,4 +24,8 @@ export class Authentication {
   signUp(user: User, password: string): Observable<User> {
     return this._authService.signUp(user, password);
   }
+
+  isLoggedIn(): Observable<User | null> {
+    return this._authService.hasSession();
+  }
 }

@@ -1,14 +1,18 @@
 import { NavBarComponent } from '@UIShare/components/nav-bar/nav-bar.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsNotLoggedInGuard } from './UI/core/guards/is-not-logged-in/is-not-logged-in.guard';
+import { IsLoggedInGuard } from './UI/core/guards/is-logged-in/is-logged-in.guard';
 
 const routes: Routes = [
   { 
     path: '',
+    canActivate: [IsNotLoggedInGuard],
     loadChildren: () => import('@UIModules/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'app',
+    canActivate: [IsLoggedInGuard],
     component: NavBarComponent,
     children:[
       {

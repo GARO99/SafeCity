@@ -1,8 +1,11 @@
-import { inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 const SESSION_KEY = "session"
 
+@Injectable({
+  providedIn: 'root'
+})
 export class StorageService {
   private _storage = inject(Storage);
 
