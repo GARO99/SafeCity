@@ -30,7 +30,7 @@ export class StorageService {
     this._storage.set(SESSION_KEY, value);
   }
 
-  async getSession<T>(key: string): Promise<T>{
+  async getSession<T>(): Promise<T>{
     return this._storage.get(SESSION_KEY);
   }
 }

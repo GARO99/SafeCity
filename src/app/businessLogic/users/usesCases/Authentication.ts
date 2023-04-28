@@ -16,6 +16,9 @@ export class Authentication {
     return this._authService.login(userCredentials).pipe(
       map((r: User) => {
         this._storageServices.setSession(r);
+        if (!r.emailVerified) {
+          this._authService.sendEmailVerification();
+        }
         return r;
       }
     ));
@@ -26,6 +29,19 @@ export class Authentication {
   }
 
   isLoggedIn(): Observable<User | null> {
-    return this._authService.hasSession();
+    return this._authService.hasSession().pipe(
+      map((r: User | null) => {
+        this._storageServices.setSession(r);
+        return r;
+      })
+    );
+  }
+
+  checkEmailVerification(): Observable<boolean> {
+    return this._authService.checkEmailVerification();
+  }
+
+  resendEmailVerification(): void {
+    this._authService.sendEmailVerification();
   }
 }

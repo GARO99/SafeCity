@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IsNotLoggedInGuard } from './UI/core/guards/is-not-logged-in/is-not-logged-in.guard';
 import { IsLoggedInGuard } from './UI/core/guards/is-logged-in/is-logged-in.guard';
+import { IsVerifyEmailGuard } from './UI/core/guards/is-verify-email/is-verify-email.guard';
 
 const routes: Routes = [
   { 
@@ -12,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    canActivate: [IsLoggedInGuard],
+    canActivate: [IsLoggedInGuard, IsVerifyEmailGuard],
     component: NavBarComponent,
     children:[
       {

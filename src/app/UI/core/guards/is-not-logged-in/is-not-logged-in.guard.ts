@@ -13,6 +13,10 @@ export class IsNotLoggedInGuard {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    const exclude = route.children.some(child => child.data?.['excludeFromAuthGuard']);
+    if (exclude) {
+      return true;
+    }
     return this._auth.isLoggedIn().pipe(
       map(r => r === null ? true : false),
       tap(IsNotLoggedIn => {
