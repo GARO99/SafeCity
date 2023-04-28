@@ -14,7 +14,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies":[
-              "js-sha256"
+              "js-sha256",
+              "localforage"
             ],
             "outputPath": "dist/safe-city",
             "index": "src/index.html",

@@ -1,5 +1,5 @@
-import { DomainEntity } from "@businessLogic/share/Domain/Entities/DomainEntity";
-import { UserIdentification} from "./UserIdentification";
+import { DomainEntity } from '@businessLogic/share/Domain/Entities/DomainEntity';
+import { UserIdentification} from './UserIdentification';
 
 export interface User extends DomainEntity {
     identification?: UserIdentification;

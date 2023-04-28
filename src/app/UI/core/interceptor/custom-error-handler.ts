@@ -1,6 +1,5 @@
 import { ErrorHandler, Injectable, inject } from "@angular/core"
 import { FirebaseError } from "@angular/fire/app";
-import { AlertController } from '@ionic/angular';
 import { defaultMessage } from "../resource/messages/default-message";
 import { Language } from "../resource/language";
 import { Device } from "@capacitor/device";

@@ -1,6 +1,6 @@
 
-import { DomainEntity } from "../Entities/DomainEntity";
-import { Observable } from "rxjs";
+import { DomainEntity } from '../Entities/DomainEntity';
+import { Observable } from 'rxjs';
 
 export abstract class IGenericRepository<T extends DomainEntity> {
   abstract getAll(): Observable<T[]>;

@@ -3,7 +3,6 @@ import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import { Authentication } from '@businessLogic/users/usesCases/Authentication';
 import { CustomValidators } from '@UIUtils/custom-validators';
-import { ToastController } from '@ionic/angular';
 import { ToastService } from 'src/app/UI/core/services/toast/toast.service';
 
 @Component({

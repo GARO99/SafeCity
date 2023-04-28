@@ -1,8 +1,8 @@
-import { Injectable, inject } from "@angular/core";
-import { Observable, map } from "rxjs";
-import { IAuthService } from "../domain/ports/IAuthService";
-import { UserCredentials } from "../domain/Entities/UserCredentials";
-import { User } from "../domain/Entities/User";
+import { Injectable, inject } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { IAuthService } from '../domain/ports/IAuthService';
+import { UserCredentials } from '../domain/Entities/UserCredentials';
+import { User } from '../domain/Entities/User';
 
 @Injectable({
   providedIn: 'root'

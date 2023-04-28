@@ -1,11 +1,11 @@
-import { Injectable, inject } from "@angular/core";
-import { IAuthService } from "../../domain/ports/IAuthService";
-import { User as AppUser} from "../../domain/Entities/User";
-import { UserCredentials as  AppUserCredentials } from "../../domain/Entities/UserCredentials";
+import { Injectable, inject } from '@angular/core';
+import { IAuthService } from '../../domain/ports/IAuthService';
+import { User as AppUser} from '../../domain/Entities/User';
+import { UserCredentials as  AppUserCredentials } from '../../domain/Entities/UserCredentials';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, first, from, of, switchMap } from "rxjs";
-import { IGenericRepository } from "@businessLogic/share/Domain/ports/IGenericRepository";
-import * as firebase from "firebase/compat";
+import { Observable, first, from, of, switchMap } from 'rxjs';
+import { IGenericRepository } from '@businessLogic/share/Domain/ports/IGenericRepository';
+import * as firebase from 'firebase/compat';
 import { sha256 } from 'js-sha256';
 
 @Injectable({

@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { ShareModule } from '@UIShare/share.module';
 import { IonicModule } from '@ionic/angular';
 import { CoreModule } from './UI/core/core.module';
+import { Drivers } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,11 @@ import { CoreModule } from './UI/core/core.module';
     AppRoutingModule,
     CoreModule,
     ShareModule,
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+     driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
+    })
   ],
   bootstrap: [AppComponent]
 })
