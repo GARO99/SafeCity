@@ -7,8 +7,8 @@ export abstract class IAuthService {
     abstract signUp(user: AppUser, password: string): Observable<AppUser>
     abstract loginWithGoogle(): Observable<AppUser>;
     abstract hasSession(): Observable<AppUser | null>;
-    abstract sendEmailVerification(): void;
+    abstract sendEmailVerification(): Observable<void>;
     abstract checkEmailVerification(): Observable<boolean>
-    abstract resetPassword(email: string): void
+    abstract resetPassword(email: string): Observable<void>
     abstract logout(): void;
 }

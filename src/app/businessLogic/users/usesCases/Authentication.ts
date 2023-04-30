@@ -17,6 +17,7 @@ export class Authentication {
       map((r: User) => {
         this._storageServices.setSession(r);
         if (!r.emailVerified) {
+          console.log(r);
           this._authService.sendEmailVerification();
         }
         return r;
@@ -50,7 +51,7 @@ export class Authentication {
     return this._authService.checkEmailVerification();
   }
 
-  resendEmailVerification(): void {
-    this._authService.sendEmailVerification();
+  resendEmailVerification(): Observable<void> {
+    return this._authService.sendEmailVerification();
   }
 }

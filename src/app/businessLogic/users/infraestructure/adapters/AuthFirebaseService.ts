@@ -52,7 +52,7 @@ export class AuthFirebaseService extends IAuthService {
         return this._repository.getById(r.user?.uid ?? '').pipe(
           switchMap((userResponse: AppUser | undefined) => {
             console.log(userResponse);
-            if(userResponse?.email){
+            if (userResponse?.email) {
               return of(userResponse);
             } else {
               const profileInfo: any = r.additionalUserInfo?.profile;
@@ -67,7 +67,7 @@ export class AuthFirebaseService extends IAuthService {
             }
           })
         );
-      }),      
+      }),
       first()
     );
   }
@@ -91,8 +91,13 @@ export class AuthFirebaseService extends IAuthService {
     );
   }
 
-  override async sendEmailVerification(): Promise<void> {
-    (await this._auth.currentUser)?.sendEmailVerification();
+  override sendEmailVerification(): Observable<void> {
+    return from((async () => {
+      const user = await this._auth.currentUser;
+      if (user) {
+        return user.sendEmailVerification();
+      }
+    })());
   }
 
   override checkEmailVerification(): Observable<boolean> {
@@ -119,7 +124,7 @@ export class AuthFirebaseService extends IAuthService {
     )
   }
 
-  override resetPassword(email: string): void {
+  override resetPassword(email: string): Observable<void> {
     throw new Error('Method not implemented.');
   }
   override logout(): void {

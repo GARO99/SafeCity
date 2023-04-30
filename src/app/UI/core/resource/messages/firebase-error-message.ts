@@ -223,8 +223,8 @@ const FirebaseErrorMessage: ResourceErrorMessageDictionary[] = [
       toClient: "User not found, please check your information."
     },
     "auth/too-many-requests": {
-      toDev: "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.",
-      toClient: "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later."
+      toDev: "We have blocked this request due to unusual activity. You can reset it immediately by resetting your password or you can try again later.",
+      toClient: "We have blocked this request due to unusual activity. You can reset it immediately by resetting your password or you can try again later."
     },
     "auth/email-already-in-use": {
       toDev: "The email address is already in use by another account.",
@@ -520,8 +520,8 @@ const FirebaseErrorMessage: ResourceErrorMessageDictionary[] = [
       toClient: "La dirección de correo electrónico ya está siendo utilizada por otra cuenta."
     },
     "auth/too-many-requests": {
-      toDev: "El acceso a esta cuenta se ha desactivado temporalmente debido a muchos intentos fallidos de inicio de sesión. Puede restablecerlo inmediatamente restableciendo su contraseña o puede volver a intentarlo más tarde.",
-      toClient: "El acceso a esta cuenta se ha desactivado temporalmente debido a muchos intentos fallidos de inicio de sesión. Puede restablecerlo inmediatamente restableciendo su contraseña o puede volver a intentarlo más tarde." 
+      toDev: "Hemos bloqueado esta solicitud debido a una actividad inusual. Puede restablecerlo inmediatamente restableciendo su contraseña o puede volver a intentarlo más tarde.",
+      toClient: "Hemos bloqueado esta solicitud debido a una actividad inusual. Puede restablecerlo inmediatamente restableciendo su contraseña o puede volver a intentarlo más tarde." 
     },
     "storage/unknown": {
       toDev: "Ocurrió un error desconocido.",

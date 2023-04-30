@@ -33,6 +33,6 @@ export class VerifyEmailComponent implements OnInit {
   }
 
   resendVerificationEmail(): void {
-    this._auth.resendEmailVerification();
+    this._auth.resendEmailVerification().subscribe();
   }
 }
