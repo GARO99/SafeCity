@@ -24,6 +24,15 @@ export class Authentication {
     ));
   }
 
+   loginWithGoogle(): Observable<User> {
+    return this._authService.loginWithGoogle().pipe(
+      map((r: User) => {
+        this._storageServices.setSession(r);
+        return r;
+      }
+    ));
+   }
+
   signUp(user: User, password: string): Observable<User> {
     return this._authService.signUp(user, password);
   }

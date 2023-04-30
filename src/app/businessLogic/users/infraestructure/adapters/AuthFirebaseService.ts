@@ -7,6 +7,7 @@ import { Observable, first, from, map, of, switchMap } from 'rxjs';
 import { IGenericRepository } from '@businessLogic/share/Domain/ports/IGenericRepository';
 import * as firebase from 'firebase/compat';
 import { sha256 } from 'js-sha256';
+import { GoogleAuthProvider, OAuthProvider } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,33 @@ export class AuthFirebaseService extends IAuthService {
         user.emailVerified = r.user?.emailVerified;
         return this._repository.create(user);
       }),
+      first()
+    );
+  }
+
+  override loginWithGoogle(): Observable<AppUser> {
+    return from(this._auth.signInWithPopup(new GoogleAuthProvider())).pipe(
+      switchMap((r: firebase.default.auth.UserCredential) => {
+        console.log(r);
+        return this._repository.getById(r.user?.uid ?? '').pipe(
+          switchMap((userResponse: AppUser | undefined) => {
+            console.log(userResponse);
+            if(userResponse?.email){
+              return of(userResponse);
+            } else {
+              const profileInfo: any = r.additionalUserInfo?.profile;
+              return this._repository.create({
+                id: r.user?.uid,
+                email: r.user?.email,
+                username: '',
+                name: profileInfo?.given_name,
+                lastName: profileInfo.family_name,
+                emailVerified: r.user?.emailVerified
+              });
+            }
+          })
+        );
+      }),      
       first()
     );
   }
@@ -91,6 +119,9 @@ export class AuthFirebaseService extends IAuthService {
     )
   }
 
+  override resetPassword(email: string): void {
+    throw new Error('Method not implemented.');
+  }
   override logout(): void {
     this._auth.signOut();
   }

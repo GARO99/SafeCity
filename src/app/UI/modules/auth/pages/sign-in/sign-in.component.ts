@@ -51,4 +51,11 @@ export class SignInComponent {
     }
   }
 
+  loginWithGoogle(): void{
+    this._auth.loginWithGoogle().subscribe(
+      () => {
+        this._router.navigate(['/app/insecurityreports']);
+      }
+    );
+  }
 }
