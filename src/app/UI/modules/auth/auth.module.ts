@@ -7,13 +7,15 @@ import { SignInComponent } from '@UIModules/auth/pages/sign-in/sign-in.component
 import { SignUpComponent } from '@UIModules/auth/pages/sign-up/sign-up.component';
 import { ShareModule } from '@UIShare/share.module';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password/forgot-password.component';
 
 
 @NgModule({
   declarations: [
     SignInComponent,
     SignUpComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,

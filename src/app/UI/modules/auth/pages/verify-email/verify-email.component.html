@@ -1,12 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Verificación de correo electrónico
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
-  <p>Por favor, verifica tu correo electrónico ({{user?.email}}) para continuar.</p>
-  <ion-button expand="block" (click)="resendVerificationEmail()">Reenviar correo de verificación</ion-button>
+  <div class="container">
+    <h1>Verificación de correo electrónico</h1>
+    <p>Por favor, verifica tu correo electrónico ({{user?.email}}) para continuar.</p>
+    <ion-button expand="block" (click)="resendVerificationEmail()">Reenviar correo de verificación</ion-button>
+  </div>
 </ion-content>

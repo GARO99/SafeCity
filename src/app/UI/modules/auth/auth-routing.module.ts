@@ -4,6 +4,7 @@ import { SignInComponent } from '@UIModules/auth/pages/sign-in/sign-in.component
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 import { IsNotVerifyEmailGuard } from '../../core/guards/is-not-verify-email/is-not-verify-email.guard';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password/forgot-password.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
     component: VerifyEmailComponent,
     canActivate: [IsNotVerifyEmailGuard],
     data: { excludeFromAuthGuard: true }
+  },
+  {
+    path: 'forgotpassword',
+    component: ForgotPasswordComponent
   }
 ];
 
