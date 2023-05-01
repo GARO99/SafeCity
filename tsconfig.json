@@ -22,7 +22,14 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@environments/*": ["src/environments/*"],
+      "@UIModules/*": ["src/app/UI/modules/*"],
+      "@UIShare/*": ["src/app/UI/share/*"],
+      "@UIUtils/*": ["src/app/UI/utils/*"],
+      "@businessLogic/*": ["src/app/businessLogic/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -1,0 +1,55 @@
+<ion-content class="ion-padding">
+    <ion-grid class="container">
+        <form [formGroup]="signInForm" autocomplete="off" novalidate (ngSubmit)="onSubmit($event)">
+            <ion-row>
+                <ion-col size="12" class="ion-text-center">
+                    <h1>Iniciar sesión</h1>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center ion-padding-top">
+                    <ion-item>
+                        <ion-label position="floating">Email</ion-label>
+                        <ion-input type="email" formControlName="email"></ion-input>
+                        <ng-container *ngFor="let validation of validations.email">
+                            <ion-note slot="error" *ngIf="signInForm.controls['email'].hasError(validation.type) && (signInForm.controls['email'].dirty ||signInForm.controls['email'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-item>
+                        <ion-label position="floating">Contraseña</ion-label>
+                        <ion-input type="password" formControlName="password"></ion-input>
+                        <ng-container *ngFor="let validation of validations.password">
+                            <ion-note slot="error" *ngIf="signInForm.controls['password'].hasError(validation.type) && (signInForm.controls['password'].dirty ||signInForm.controls['email'].touched)">
+                                <ion-icon name="information-circle-outline"></ion-icon>
+                                {{ validation.message }}
+                            </ion-note>
+                        </ng-container>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row class="ion-padding">
+                <ion-col size="6" class="ion-text-center">
+                    <ion-button type="submit" expand="block">Iniciar sesión</ion-button>
+                </ion-col>
+                <ion-col size="6" class="ion-text-center">
+                    <ion-button routerLink="/signup" expand="block" color="secondary">Registrarse</ion-button>
+                </ion-col>
+            </ion-row>
+        </form>
+        <ion-row>
+            <ion-col size="12" class="ion-text-center">
+                <a routerLink="/forgotpassword">¿Olvidó su contraseña?</a>
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-padding">
+            <ion-col size="12" class="ion-text-center">
+                <ion-button expand="block" color="danger" (click)="loginWithGoogle()">
+                    <ion-icon name="logo-google"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
