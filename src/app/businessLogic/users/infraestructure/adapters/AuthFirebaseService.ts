@@ -51,7 +51,6 @@ export class AuthFirebaseService extends IAuthService {
         console.log(r);
         return this._repository.getById(r.user?.uid ?? '').pipe(
           switchMap((userResponse: AppUser | undefined) => {
-            console.log(userResponse);
             if (userResponse?.email) {
               return of(userResponse);
             } else {
@@ -97,7 +96,9 @@ export class AuthFirebaseService extends IAuthService {
       if (user) {
         return user.sendEmailVerification();
       }
-    })());
+    })()).pipe(
+      first()
+    );
   }
 
   override checkEmailVerification(): Observable<boolean> {
@@ -124,8 +125,10 @@ export class AuthFirebaseService extends IAuthService {
     )
   }
 
-  override resetPassword(email: string): Observable<void> {
-    throw new Error('Method not implemented.');
+  override sendPasswordResetEmail(email: string): Observable<void> {
+    return from(this._auth.sendPasswordResetEmail(email)).pipe(
+      first()
+    );
   }
   override logout(): void {
     this._auth.signOut();

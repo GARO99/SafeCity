@@ -9,6 +9,6 @@ export abstract class IAuthService {
     abstract hasSession(): Observable<AppUser | null>;
     abstract sendEmailVerification(): Observable<void>;
     abstract checkEmailVerification(): Observable<boolean>
-    abstract resetPassword(email: string): Observable<void>
+    abstract sendPasswordResetEmail(email: string): Observable<void>
     abstract logout(): void;
 }

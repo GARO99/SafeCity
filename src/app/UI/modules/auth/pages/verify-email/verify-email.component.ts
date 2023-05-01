@@ -35,4 +35,9 @@ export class VerifyEmailComponent implements OnInit {
   resendVerificationEmail(): void {
     this._auth.resendEmailVerification().subscribe();
   }
+
+  logout(): void {
+    this._auth.logout();
+    this._router.navigate(['']);
+  }
 }

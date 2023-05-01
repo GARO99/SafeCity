@@ -3,6 +3,7 @@ import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import { Authentication } from '@businessLogic/users/usesCases/Authentication';
 import { CustomValidators } from '@UIUtils/custom-validators';
+import { finalize } from 'rxjs';
 import { ToastService } from 'src/app/UI/core/services/toast/toast.service';
 
 @Component({
@@ -14,7 +15,6 @@ export class SignUpComponent {
   private _auth = inject(Authentication);
   private _router = inject(Router);
   private _fb = inject(FormBuilder);
-  private _toastService = inject(ToastService);
 
   signUpForm!: FormGroup;
   validations: any = {
@@ -74,8 +74,7 @@ export class SignUpComponent {
         lastName: this.signUpForm.get('lastName')?.value,
       }, this.signUpForm.get('password')?.value).subscribe(
         () =>{
-          this._router.navigate(['']);
-          this._toastService.topToast('Ahora puedes iniciar sesión');
+          this._router.navigate(['/app/insecurityreports']);
         }
       );
     }else{

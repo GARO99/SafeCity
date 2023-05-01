@@ -17,7 +17,6 @@ export class Authentication {
       map((r: User) => {
         this._storageServices.setSession(r);
         if (!r.emailVerified) {
-          console.log(r);
           this._authService.sendEmailVerification();
         }
         return r;
@@ -35,7 +34,15 @@ export class Authentication {
    }
 
   signUp(user: User, password: string): Observable<User> {
-    return this._authService.signUp(user, password);
+    return this._authService.signUp(user, password).pipe(
+      map((r: User) => {
+        this._storageServices.setSession(r);
+        if (!r.emailVerified) {
+          this._authService.sendEmailVerification();
+        }
+        return r;
+      }
+    ));
   }
 
   isLoggedIn(): Observable<User | null> {
@@ -47,11 +54,19 @@ export class Authentication {
     );
   }
 
+  logout(): void{
+    this._authService.logout();
+  }
+
   checkEmailVerification(): Observable<boolean> {
     return this._authService.checkEmailVerification();
   }
 
   resendEmailVerification(): Observable<void> {
     return this._authService.sendEmailVerification();
+  }
+
+  sendPasswordResetEmail(email: string): Observable<void> {
+    return this._authService.sendPasswordResetEmail(email);
   }
 }
