@@ -1,5 +1,6 @@
 export const environment = {
   isDeveloped: false,
+  mapsApikey: '',
   firebase: {
     projectId: '',
     appId: '',

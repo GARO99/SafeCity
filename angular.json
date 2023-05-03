@@ -15,7 +15,8 @@
           "options": {
             "allowedCommonJsDependencies":[
               "js-sha256",
-              "localforage"
+              "localforage",
+              "fast-deep-equal"
             ],
             "outputPath": "dist/safe-city",
             "index": "src/index.html",
