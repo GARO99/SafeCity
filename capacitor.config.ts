@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'gasapp',
-  webDir: 'www',
+  appId: 'com.safecity.app',
+  appName: 'SafeCity',
+  webDir: 'dist/safe-city',
   bundledWebRuntime: false
 };
 
