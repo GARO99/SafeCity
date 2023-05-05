@@ -64,7 +64,6 @@ export class AuthFirebaseService extends IAuthService {
   override loginWithGoogle(): Observable<AppUser> {
     return from(this._auth.signInWithPopup(new GoogleAuthProvider())).pipe(
       switchMap((r: firebase.default.auth.UserCredential) => {
-        console.log(r);
         return this._repository.getById(r.user?.uid ?? '').pipe(
           switchMap((userResponse: AppUser | undefined) => {
             if (userResponse?.email) {

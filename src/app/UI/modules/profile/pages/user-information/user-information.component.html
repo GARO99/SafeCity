@@ -7,6 +7,23 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <p>works</p>
-  <ion-button expand="block" (click)="logout()">Cerrar sesión</ion-button>
+  <div class="ion-text-center">
+    <ion-avatar slot="end">
+      <img src="{{ currentUser?.avatarUrl }}">
+    </ion-avatar>
+    <h2>{{ currentUser?.username || currentUser?.name }}</h2>
+    <p>{{ currentUser?.name }} {{ currentUser?.lastName }}</p>
+  </div>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="pencil"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="danger" expand="block" (click)="logout()">
+      Cerrar sesión
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
