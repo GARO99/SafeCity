@@ -7,6 +7,7 @@ export interface User extends DomainEntity {
     name: string;
     lastName: string;
     email: string;
+    avatarUrl?: string;
     userEventTags?: string[];
-    emailVerified?: boolean;
+    emailVerified?: boolean
 }

@@ -14,7 +14,6 @@ export class FirestoreContext {
   }
 
   private OnModelCreating(): void {
-    
     this._dataModel.set(DataModelsEnum.user, '/users');
   }
 
