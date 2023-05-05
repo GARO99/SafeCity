@@ -12,6 +12,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideMessaging,getMessaging } from '@angular/fire/messaging';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { CustomErrorHandler } from "./interceptor/custom-error-handler";
+import { IFileSotrageService } from "@businessLogic/share/Domain/ports/IFileSotrageService";
+import { FirestorageService } from "@businessLogic/share/infraestructure/adapters/FirestorageService";
 
 @NgModule({
   imports: [    
@@ -26,7 +28,8 @@ import { CustomErrorHandler } from "./interceptor/custom-error-handler";
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     { provide: ErrorHandler, useClass: CustomErrorHandler },
     { provide: IAuthService, useClass: AuthFirebaseService },
-    { provide: IGenericRepository, useClass: GenericFirestoreRepository }
+    { provide: IGenericRepository, useClass: GenericFirestoreRepository },
+    { provide: IFileSotrageService, useClass: FirestorageService}
   ]
 })
 export class CoreModule {}

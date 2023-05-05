@@ -16,7 +16,11 @@ export class GenericFirestoreRepository<T extends DomainEntity> extends IGeneric
 
   constructor() {
     super();
-    this._ref = this._db.collection(this._context.Set(DataModelsEnum.user));     
+    this._ref = this._db.collection(this._context.Set(DataModelsEnum.user)); 
+  }
+
+  override setDataModel(dataModel :DataModelsEnum ){
+    this._ref = this._db.collection(this._context.Set(dataModel));  
   }
 
   override getAll(): Observable<T[]> {

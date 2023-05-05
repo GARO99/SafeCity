@@ -3,10 +3,15 @@ import { IAuthService } from '../../domain/ports/IAuthService';
 import { User as AppUser } from '../../domain/Entities/User';
 import { UserCredentials as AppUserCredentials } from '../../domain/Entities/UserCredentials';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, first, from, map, of, switchMap } from 'rxjs';
+import { Observable, first, from, map, of, switchMap, tap } from 'rxjs';
 import { IGenericRepository } from '@businessLogic/share/Domain/ports/IGenericRepository';
 import * as firebase from 'firebase/compat';
 import { GoogleAuthProvider, OAuthProvider } from '@angular/fire/auth';
+import { DataModelsEnum } from '@businessLogic/share/infraestructure/enums/DataModelsEnum';
+import { IFileSotrageService } from '@businessLogic/share/Domain/ports/IFileSotrageService';
+import { BaseFilePathEnum } from '@businessLogic/share/infraestructure/enums/BaseFilePathEnum';
+
+const defaultAvatar = 'avatar-0.svg';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +19,13 @@ import { GoogleAuthProvider, OAuthProvider } from '@angular/fire/auth';
 export class AuthFirebaseService extends IAuthService {
   private _auth = inject(AngularFireAuth);
   private _repository = inject(IGenericRepository<AppUser>)
+  private _fileStorage = inject(IFileSotrageService);
+
+  constructor() {
+    super();
+    this._repository.setDataModel(DataModelsEnum.user);
+    this._fileStorage.setBaseFilePath(BaseFilePathEnum.appAvatars);
+  }
 
   override login(userCredentials: AppUserCredentials): Observable<AppUser> {
     return from(this._auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password)).pipe(
@@ -36,9 +48,14 @@ export class AuthFirebaseService extends IAuthService {
   override signUp(user: AppUser, password: string): Observable<AppUser> {
     return from(this._auth.createUserWithEmailAndPassword(user.email, password)).pipe(
       switchMap((r: firebase.default.auth.UserCredential) => {
-        user.id = r.user?.uid;
-        user.emailVerified = r.user?.emailVerified;
-        return this._repository.create(user);
+        return this._fileStorage.getUrlFile(defaultAvatar).pipe(
+          switchMap((imgUrl:string) => {
+            user.avatarUrl = imgUrl;
+            user.id = r.user?.uid;
+            user.emailVerified = r.user?.emailVerified;
+            return this._repository.create(user);
+          })
+        );
       }),
       first()
     );
@@ -47,21 +64,25 @@ export class AuthFirebaseService extends IAuthService {
   override loginWithGoogle(): Observable<AppUser> {
     return from(this._auth.signInWithPopup(new GoogleAuthProvider())).pipe(
       switchMap((r: firebase.default.auth.UserCredential) => {
-        console.log(r);
         return this._repository.getById(r.user?.uid ?? '').pipe(
           switchMap((userResponse: AppUser | undefined) => {
             if (userResponse?.email) {
               return of(userResponse);
             } else {
               const profileInfo: any = r.additionalUserInfo?.profile;
-              return this._repository.create({
-                id: r.user?.uid,
-                email: r.user?.email,
-                username: '',
-                name: profileInfo?.given_name,
-                lastName: profileInfo.family_name,
-                emailVerified: r.user?.emailVerified
-              });
+              return this._fileStorage.getUrlFile(defaultAvatar).pipe(
+                switchMap((imgUrl:string) => {
+                  return this._repository.create({
+                    id: r.user?.uid,
+                    email: r.user?.email,
+                    username: '',
+                    name: profileInfo?.given_name,
+                    lastName: profileInfo.family_name,
+                    emailVerified: r.user?.emailVerified,
+                    avatarUrl: imgUrl
+                  });
+                })
+              );
             }
           })
         );
